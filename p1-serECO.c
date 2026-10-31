@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
                 else if (bytesRebuts == 0) {
                     write(1, "Connexió tancada pel client.\n", 29);
                     rep = 0;
-                    continuar=0;
                 } 
                 else {
                     buffer[bytesRebuts] = '\0';
