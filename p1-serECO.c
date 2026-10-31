@@ -126,7 +126,6 @@ int main(int argc, char *argv[])
 
 void tancament_suau(int sig)
 {
-    (void)sig;
     write(1, "\n[MS4] Senyal Ctrl+C rebut. Tancant suaument...\n", 48);
     if (scon >= 0) {
         TCP_TancaSock(scon);
@@ -135,5 +134,5 @@ void tancament_suau(int sig)
         TCP_TancaSock(Sck);
     }
     write(1, "Sockets alliberats. Servidor apagat.\n", 37);
-    _exit(0);
+    exit(0);
 }
