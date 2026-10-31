@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 
             int envia = 1;
             while (envia) {
+                write(1, "Escriu un missatge ('Final' per sortir): ", 41);
                 n = read(0, buffer, MAX_BUFFER - 1);
                 if (n <= 0) {
                     envia = 0;
