@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     char IPloc[16];
     int portTCPloc;
     char buffer[MAX_BUFFER];
-    int bytesEnviats, bytesRebuts;
+    int bytesEnviats, bytesRebuts, n;
     int continuar = 1;
     char msg[150];
     int len;
@@ -49,9 +49,17 @@ int main(int argc, char *argv[])
 
     /* MS4: quan l'administrador premi ^C s'executarà tancament_suau()     */
     signal(SIGINT, tancament_suau);
-
+	
+	write(1, "Introdueix el port TCP del servidor: ", 37);
+	n = read(0, buffer, sizeof(buffer) - 1);
+    if (n > 0) {
+        if (buffer[n - 1] == '\n') buffer[n - 1] = '\0';
+        else buffer[n] = '\0';
+        portTCPloc = atoi(buffer);
+    }
+	
     // Creem el socket servidor. Posant el port 0, el SO n'assignarà un de lliure.
-    Sck = TCP_CreaSockServidor(IPesc, 0);
+    Sck = TCP_CreaSockServidor(IPesc, portTCPloc);
     if (Sck < 0) {
         int codiRes;
 		char* Missatge = T_ObteTextRes(&codiRes);
