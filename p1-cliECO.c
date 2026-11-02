@@ -42,7 +42,9 @@ int main(int argc, char *argv[])
         }
 
         if (TCP_DemanaConnexio(Sck, IPrem, portTCPrem) < 0) {
-            perror("Error en connectar amb el servidor");
+            int codiRes;
+			char* Missatge = T_ObteTextRes(&codiRes);
+			printf("Error en connect() -> errno: %d \n Missatge: %s\n", codiRes, Missatge);
             TCP_TancaSock(Sck);
         }
         else {
@@ -87,6 +89,9 @@ int main(int argc, char *argv[])
                         envia = 0;
                     }
                     else {
+						buffer[n] = '\n';
+                        n++;
+                        buffer[n] = '\0'; 
                         bytesEnviats = TCP_Envia(Sck, buffer, n); // Enviem només els caràcters útils (n)
                         if (bytesEnviats < 0) {
                             perror("Error enviar dades");

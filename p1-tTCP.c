@@ -217,14 +217,35 @@ int TCP_Envia(int Sck, const char *SeqBytes, int LongSeqBytes)
 /* -1 si hi ha error.                                                     */
 int TCP_Rep(int Sck, char *SeqBytes, int LongSeqBytes)
 {
-	int bytes_llegits;
+    int total_bytes = 0;
+    int bytes_llegits = 0;
+    int Fi = 0; 
+    char c;
 
-	if((bytes_llegits=read(Sck,SeqBytes,LongSeqBytes))==-1)
-	{
-		return -1;
-	}
+    while (total_bytes < LongSeqBytes && !Fi)
+    {
+        bytes_llegits = read(Sck, &c, 1);
+        if (bytes_llegits == -1)
+        {
+            return -1; 
+        }
+        else if (bytes_llegits == 0)
+        {
+            Fi = 1; 
+        }
+        else
+        {
+            SeqBytes[total_bytes] = c;
+            total_bytes++;
 
-	return bytes_llegits;
+            if (c == '\n')
+            {
+                Fi = 1; 
+            }
+        }
+    }
+
+    return total_bytes;
 }
 
 /* S’allibera (s’esborra) el socket TCP d’identificador “Sck”; si “Sck”   */

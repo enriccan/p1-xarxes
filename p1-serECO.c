@@ -53,7 +53,9 @@ int main(int argc, char *argv[])
     // Creem el socket servidor. Posant el port 0, el SO n'assignarà un de lliure.
     Sck = TCP_CreaSockServidor(IPesc, 0);
     if (Sck < 0) {
-        perror("Error en crear el socket servidor");
+        int codiRes;
+		char* Missatge = T_ObteTextRes(&codiRes);
+		printf("Error en socket() -> errno: %d \n Missatge: %s\n", codiRes, Missatge);
         return -1;
     }
 
